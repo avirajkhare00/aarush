@@ -1,17 +1,48 @@
 import io
 import urllib
+import requests
 import cv2
 import numpy as np
 import time
 from PIL import Image, ImageEnhance
 
+import os
+import glob
+
 # Replace the URL with your own IPwebcam shot.jpg IP:port
-url='http://192.168.225.229:8080/shot.jpg'
+url='http://192.168.225.229:3010/shot.jpg'
+
+#we need to put a counter and see if person face is recognized then how many images it can capture.
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 
+counter = 0
+detect_face = False
+
+def send_data_server():
+
+    server_url = ""
+    data = {
+    
+    }
+
+    r = requests.post(server_url, data=data)
+
+    if r.status_code == 200:
+
+        print r.text
+
+
+
 while True:
+
+    if detect_face == False:
+        counter = 0
+        #delete whole data inside it
+        files = glob.glob('data/*')
+        for f in files:
+            os.remove(f)
 
     content = urllib.urlopen(url).read()
     img = Image.open(io.BytesIO(content))
@@ -33,5 +64,17 @@ while True:
         for (ex,ey,ew,eh) in eyes:
             cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
             print "face found!"
+            detect_face = True
+
+            f = open('data/image' + str(counter) + '.jpg', 'w')
+            f.write(content)
+            f.close()
+            
+            #if counter value is 7 then send image
+            counter = counter + 1
+
+            if counter > 7:
+                #take data and send image
+                pass
 
     print "No face found!"
