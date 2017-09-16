@@ -1,0 +1,1 @@
+This is responsible for creating unique ids and sending data to openface. It will give unique_id as image folder. if a person is found, then map unique id and oother details and after that name and all will be shown.
