@@ -20,5 +20,5 @@ from app1.views import get_person_data
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'get_person_pics', get_person_data, name='get_person_pics'),
+    url(r'get_person_pics/', get_person_data, name='get_person_pics'),
 ]
