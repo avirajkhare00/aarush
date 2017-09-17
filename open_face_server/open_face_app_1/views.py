@@ -28,5 +28,7 @@ def pics_data(request):
 
     os.system('mkdir /root/openface/training-images/' + uploaded_zip + '/')
     os.system('unzip -d /root/openface/training-images/' + uploaded_zip + '/ ' + '/root/openface/aarush/open_face_server/open_face_app_1/static/' + uploaded_zip + '.zip')
+    os.system('mv /root/openface/training-images/' + uploaded_zip + '/data/*.jpg ' '/root/openface/training-images/' + uploaded_zip + '/')
+    os.system('rm -rf /root/openface/training-images/' + uploaded_zip + '/data/')
 
     return HttpResponse(200)
