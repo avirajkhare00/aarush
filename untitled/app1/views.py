@@ -78,7 +78,7 @@ def enquire_person(request):
 
         file_path = 'static/open_tickets/' + predicted_timestamp + '.jpg'
 
-        return HttpResponse(predicted_timestamp)
+        return HttpResponse(predicted_timestamp + file_path)
 
     else:
 
