@@ -48,7 +48,7 @@ def recognize_person(request):
     #os.system('cp open_face_app_1/static/open_tickets/' + ticket_number + '.jpg' + '')
 
 
-    process = subprocess.Popen(["/root/openface/demos/classifier.py infer /root/openface/generated-embeddings/classifier.pkl " + "/root//openface/aarush/open_face_server/open_face_app_1/static/open_tickets/" + ticket_number + '.jpg'], stdout=subprocess.PIPE)
+    process = subprocess.Popen(["/root/openface/demos/classifier.py infer /root/openface/generated-embeddings/classifier.pkl " + "/root/openface/aarush/open_face_server/open_face_app_1/static/open_tickets/" + ticket_number + '.jpg'], stdout=subprocess.PIPE)
     result = process.communicate()[0]
 
     print result
