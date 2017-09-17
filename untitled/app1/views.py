@@ -25,7 +25,7 @@ def get_person_data(request):
     fs = FileSystemStorage(location='app1/static/open_tickets')
     fs.save(str(timestamp.split('.')[0]) + '.jpg', person_pic)
 
-    new_person.timestamp = timestamp
+    new_person.timestamp = timestamp.split('.')[0]
     new_person.save()
 
     openface_app_url = "http://127.0.0.1:3004/pics_data/"
@@ -77,6 +77,8 @@ def enquire_person(request):
         predicted_timestamp = r.text.split(' ')[-4:-3][0]
 
         file_path = 'static/open_tickets/' + predicted_timestamp + '.jpg'
+
+        new_person = NewPersonObj.objects.get(timestamp=predicted_timestamp)
 
         return HttpResponse(predicted_timestamp + ' ' + file_path)
 
