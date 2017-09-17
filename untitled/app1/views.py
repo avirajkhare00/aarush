@@ -23,7 +23,7 @@ def get_person_data(request):
     timestamp = time.time()
 
     fs = FileSystemStorage(location='app1/static/open_tickets')
-    fs.save(timestamp + '.jpg', person_pic)
+    fs.save(str(timestamp) + '.jpg', person_pic)
 
     new_person.timestamp = timestamp
     new_person.save()
