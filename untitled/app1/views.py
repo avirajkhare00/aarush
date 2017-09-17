@@ -74,7 +74,7 @@ def enquire_person(request):
 
         print r.text
 
-        return HttpResponse(r.text.split(' ')[:-4])
+        return HttpResponse(r.text.split(' ')[:-3])
 
     else:
 
