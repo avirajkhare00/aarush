@@ -74,10 +74,9 @@ def enquire_person(request):
 
         print r.text
 
-        predicted_timestamp = r.text.split(' ')[:-3]
-        predicted_timestamp = predicted_timestamp.split('===')
+        predicted_timestamp = r.text.split(' ')[-4:-3]
 
-        return HttpResponse(predicted_timestamp[-1])
+        return HttpResponse(predicted_timestamp)
 
     else:
 
