@@ -74,7 +74,10 @@ def enquire_person(request):
 
         print r.text
 
-        return HttpResponse(r.text.split(' ')[:-3])
+        predicted_timestamp = r.text.split(' ')[:-3]
+        predicted_timestamp = predicted_timestamp[7:]
+
+        return HttpResponse(predicted_timestamp)
 
     else:
 
