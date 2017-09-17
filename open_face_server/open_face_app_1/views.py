@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.core.files.storage import FileSystemStorage
 
 import os
 
@@ -13,16 +14,18 @@ def pics_data(request):
 
     print request.POST
 
-    uploaded_folder = request.FILES['file'].name[:-3]
+    uploaded_zip = request.POST['timestamp'].split('.')[0]
 
     # create the folder if it doesn't exist.
 
     # save the uploaded file inside that folder.
 
-    fout = open('training-images-zip', 'wb+')
-    # Iterate through the chunks.
-    for chunk in fout.chunks():
-        fout.write(chunk)
-    fout.close()
+    myfile = request.FILES['zip_file']
+
+
+    fs = FileSystemStorage(location='open_face_app_1/static/')
+    fs.save(uploaded_zip + '.zip', myfile)
+
+    os.system('unzip -d /root/openface/training-images/ ' + uploaded_zip + '.zip')
 
     return HttpResponse(200)
