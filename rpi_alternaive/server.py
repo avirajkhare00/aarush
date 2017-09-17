@@ -22,17 +22,35 @@ detect_face = False
 
 def send_data_server():
 
-    server_url = ""
+    server_url = "http://52.172.216.40/get_person_pics/"
+    local_server_url = "http://127.0.0.1:8004/get_person_pics/"
+
     data = {
-    
+        "intent" : "images",
     }
 
-    r = requests.post(server_url, data=data)
+    #image_str = 0
+
+    #for filename in os.listdir('data'):
+    #    if filename.endswith(".jpg"): 
+    #        
+    #        data['image_data'].append({"image_" + str(image_str) : open('data/' + filename, 'rb')})
+
+    #        image_str = image_str + 1
+
+    os.system('zip -r image_data.zip data')
+
+    files = {
+        'image_zip_file' : open('image_data.zip', 'rb')
+    }
+
+    r = requests.post(local_server_url, data=data, files=files)
 
     if r.status_code == 200:
 
         print r.text
 
+        detect_face = False
 
 
 while True:
@@ -56,7 +74,9 @@ while True:
 
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     
+    #if face is not detected, it stays out of for loop
     for (x,y,w,h) in faces:
+        
         img = cv2.rectangle(enhanced_image,(x,y),(x+w,y+h),(255,0,0),2)
         roi_gray = gray[y:y+h, x:x+w]
         roi_color = enhanced_image[y:y+h, x:x+w]
@@ -73,8 +93,11 @@ while True:
             #if counter value is 7 then send image
             counter = counter + 1
 
+            print "counter value " + str(counter)
+
             if counter > 7:
-                #take data and send image
-                pass
+                
+                send_data_server()
+                counter = 0
 
     print "No face found!"

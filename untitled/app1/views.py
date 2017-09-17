@@ -5,6 +5,7 @@ from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import time
 import requests
+import json
 
 from app1.models import NewPersonObj
 
@@ -13,8 +14,6 @@ from app1.models import NewPersonObj
 @csrf_exempt
 def get_person_data(request):
 
-    print request.POST
-
     new_person = NewPersonObj()
 
     timestamp = time.time()
@@ -22,14 +21,19 @@ def get_person_data(request):
     new_person.timestamp = timestamp
     new_person.save()
 
-    nodejs_url = "http://127.0.0.1:3004/pics_data"
+    openface_app_url = "http://127.0.0.1:3004/pics_data/"
+
 
     data = {
         "timestamp" : timestamp,
-        "image_data" : request.POST
     }
 
-    r = requests.post(nodejs_url, data=data)
+    files = {
+        'zip_file' : request.FILES['image_zip_file'].read()
+    }
+
+
+    r = requests.post(openface_app_url, data=data, files=files)
 
     if r.status_code == 200:
 
