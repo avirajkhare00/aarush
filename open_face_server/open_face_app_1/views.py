@@ -31,4 +31,6 @@ def pics_data(request):
     os.system('mv /root/openface/training-images/' + uploaded_zip + '/data/*.jpg ' '/root/openface/training-images/' + uploaded_zip + '/')
     os.system('rm -rf /root/openface/training-images/' + uploaded_zip + '/data/')
 
+    os.system('python /root/openface/trainer_script_django.py')
+
     return HttpResponse(200)
