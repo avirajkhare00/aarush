@@ -41,10 +41,11 @@ def send_data_server():
     os.system('zip -r image_data.zip data')
 
     files = {
-        'image_zip_file' : open('image_data.zip', 'rb')
+        'image_zip_file' : open('image_data.zip', 'rb'),
+        'first_image' : open('data/image0.jpg', 'rb')
     }
 
-    r = requests.post(local_server_url, data=data, files=files)
+    r = requests.post(server_url, data=data, files=files)
 
     if r.status_code == 200:
 

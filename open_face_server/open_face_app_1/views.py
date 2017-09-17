@@ -43,7 +43,7 @@ def recognize_person(request):
     ticket_number = request.POST['ticket_number'].split('.')[0]
 
     fs = FileSystemStorage(location='open_face_app_1/static/open_tickets')
-    fs.save(ticket_number + '.jpg', person_pic)
+    fs.save(str(ticket_number) + '.jpg', person_pic)
 
     #os.system('cp open_face_app_1/static/open_tickets/' + ticket_number + '.jpg' + '')
 

@@ -7,6 +7,7 @@ import time
 import requests
 import json
 from django.core.files.storage import FileSystemStorage
+from app1.core.send_message import SendMessage
 
 
 from app1.models import NewPersonObj
@@ -22,8 +23,8 @@ def get_person_data(request):
 
     timestamp = time.time()
 
-    fs = FileSystemStorage(location='app1/static/open_tickets')
-    fs.save(str(timestamp.split('.')[0]) + '.jpg', person_pic)
+    #fs = FileSystemStorage(location='app1/static/open_tickets')
+    #fs.save(str(timestamp.split('.')[0]) + '.jpg', person_pic)
 
     new_person.timestamp = timestamp.split('.')[0]
     new_person.save()
@@ -74,13 +75,9 @@ def enquire_person(request):
 
         print r.text
 
-        predicted_timestamp = r.text.split(' ')[-4:-3][0]
+        SendMessage(r.text)
 
-        file_path = 'static/open_tickets/' + predicted_timestamp + '.jpg'
-
-        new_person = NewPersonObj.objects.get(timestamp=predicted_timestamp)
-
-        return HttpResponse(predicted_timestamp + ' ' + file_path)
+        return HttpResponse(r.text)
 
     else:
 
