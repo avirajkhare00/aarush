@@ -76,6 +76,8 @@ def enquire_person(request):
 
         predicted_timestamp = r.text.split(' ')[-4:-3]
 
+        file_path = 'static/open_tickets/' + predicted_timestamp + '.jpg'
+
         return HttpResponse(predicted_timestamp)
 
     else:
