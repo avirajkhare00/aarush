@@ -19,5 +19,6 @@ from open_face_app_1.views import pics_data
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'pics_data/', pics_data, name='pics_data'),
+    url(r'pics_data/$', pics_data, name='pics_data'),
+    url(r'recognize_person/$')
 ]

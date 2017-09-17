@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import FileSystemStorage
 
 import os
+import subprocess
 
 # Create your views here.
 
@@ -34,3 +35,22 @@ def pics_data(request):
     os.system('python /root/openface/trainer_script_django.py')
 
     return HttpResponse(200)
+
+@csrf_exempt
+def recognize_person(request):
+
+    person_pic = request.FILES['image']
+    ticket_number = request.POST['ticket_number']
+
+    fs = FileSystemStorage(location='open_face_app_1/static/open_tickets')
+    fs.save(ticket_number + '.jpg', person_pic)
+
+    #os.system('cp open_face_app_1/static/open_tickets/' + ticket_number + '.jpg' + '')
+
+
+    process = subprocess.Popen(["/root/openface/demos/classifier.py infer ./generated-embeddings/classifier.pkl " + "open_face_app_1/static/open_tickets/" + ticket_number + '.jpg'], stdout=subprocess.PIPE)
+    result = process.communicate()[0]
+
+    print result
+
+    return HttpResponse(result)
