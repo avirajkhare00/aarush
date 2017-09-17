@@ -26,6 +26,6 @@ def pics_data(request):
     fs = FileSystemStorage(location='open_face_app_1/static/')
     fs.save(uploaded_zip + '.zip', myfile)
 
-    os.system('unzip -d /root/openface/training-images/ ' + uploaded_zip + '.zip')
+    os.system('unzip -d /root/openface/training-images/ ' + '/root/openface/aarush/open_face_server/open_face_app_1/static/' + uploaded_zip + '.zip')
 
     return HttpResponse(200)
