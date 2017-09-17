@@ -40,7 +40,7 @@ def pics_data(request):
 def recognize_person(request):
 
     person_pic = request.FILES['image']
-    ticket_number = request.POST['ticket_number']
+    ticket_number = request.POST['ticket_number'].split('.')[0]
 
     fs = FileSystemStorage(location='open_face_app_1/static/open_tickets')
     fs.save(ticket_number + '.jpg', person_pic)
