@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from open_face_app_1.views import pics_data
+from open_face_app_1.views import pics_data, recognize_person
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'pics_data/$', pics_data, name='pics_data'),
-    url(r'recognize_person/$')
+    url(r'recognize_person/$', recognize_person, name='recognize_data')
 ]
